@@ -1,5 +1,5 @@
 {
-  "name": "actiontree",
+  "name": "actiontrees",
   "version": "0.0.2",
   "description": "A journaling, state based task runner.",
   "main": "index.js",
