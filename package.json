@@ -1,0 +1,42 @@
+{
+  "name": "actiontree",
+  "version": "0.0.0",
+  "description": "A journaling, state based task runner.",
+  "main": "index.js",
+  "scripts": {
+    "prepublishOnly": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actionforest/ActionTree.git"
+  },
+  "keywords": [
+    "Tasks"
+  ],
+  "author": "Jim Bulkowski <jim.b@paperelectron.com> (http://paperelectron.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/actionforest/ActionTree/issues"
+  },
+  "homepage": "https://github.com/actionforest/ActionTree#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/lodash": "^4.14.133",
+    "@types/node": "^12.0.6",
+    "@types/object-hash": "^1.2.0",
+    "jest": "^24.8.0",
+    "knex": "^0.17.3",
+    "pg": "^7.11.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.5",
+    "fs-extra": "^8.0.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "object-hash": "^1.3.1",
+    "uuid": "^3.3.2"
+  }
+}
