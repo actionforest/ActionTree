@@ -8,7 +8,7 @@ coverage/
 *.log
 .DS_Store
 .npmrc
-/Plugins/
+/Modules/
 index.js
 index.js.map
 index.d.ts
