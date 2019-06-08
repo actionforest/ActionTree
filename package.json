@@ -3,6 +3,13 @@
   "version": "0.0.3",
   "description": "A journaling, state based task runner.",
   "main": "index.js",
+  "files": [
+    "index.d.ts",
+    "index.js.map",
+    "Modules/**/*",
+    "Readme.md",
+    "LICENCE"
+  ],
   "scripts": {
     "prepublishOnly": "tsc",
     "test": "jest"
