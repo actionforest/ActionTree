@@ -85,7 +85,7 @@ export class ActionTree {
     this.handlerContainer = new HandlerContainer(this.internalLogger)
     this.tasks = new Map()
     this.abstract = new Map()
-    this.internalLogger.debug('warn', 'Subexigency created')
+    this.internalLogger.debug('warn', 'ActionTree created')
 
 
     this.taskHooks = {
