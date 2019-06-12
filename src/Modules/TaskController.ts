@@ -16,12 +16,18 @@ export interface TaskMetadata {
   error?: boolean | null
 }
 
+export interface RPCmetadata {
+  correlationId: string,
+  replyTo: string
+}
+
 export interface TaskState {
   [key: string]: any
 }
 
 export interface PendingTask {
   metadata: TaskMetadata,
+  RPCmetadata?: RPCmetadata
   state: TaskState
 }
 
@@ -48,6 +54,8 @@ export interface TaskControllerProps {
   currentTransition?: any,
   transitionName?: string
   transitionError?: Error
+  replyTo?: string
+  correlationId?: string
   type?: TaskTypes,
 }
 
@@ -66,10 +74,14 @@ export class TaskController {
   private transitionError: Error
   private readonly type: TaskTypes
   private readonly identifier: any
+  private correlationId: string | any
+  private replyTo: string | any
 
 
   constructor(taskData: PendingTask, queueIdentifier?: any) {
     this.identifier = queueIdentifier || null
+    this.correlationId = getOr(null, 'RPCmetadata.correlationId', taskData)
+    this.replyTo = getOr(null, 'RPCmetadata.replyTo', taskData)
     this.name = taskData.metadata.name
     this.uuid = taskData.metadata.uuid || null
     this.error = taskData.metadata.error || null
@@ -141,6 +153,12 @@ export class TaskController {
     return this.error
   }
 
+  getRPCmeta(){
+    return {
+      replyTo: this.replyTo,
+      correlationId: this.correlationId
+    }
+  }
   getPayload() {
     return cloneDeep(this.originalStatePayload)
   }

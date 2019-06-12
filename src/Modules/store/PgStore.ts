@@ -16,7 +16,7 @@ import {
   simpleDefaultTransition, UTCNow
 } from "./StoreHelpers";
 import {reduce} from "lodash/fp";
-import {v4} from "uuid";
+
 
 export interface SimplePGConfig {
   user: string,

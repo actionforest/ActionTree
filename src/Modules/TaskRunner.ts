@@ -99,7 +99,9 @@ export class TaskRunner {
     return this.Store.createTask({
       name: this.taskController.getName(),
       retriesRemaining: this.taskHandler.getConfig().retryLimit,
-      retryDelay: this.taskHandler.getConfig().retryDelay
+      retryDelay: this.taskHandler.getConfig().retryDelay,
+      replyTo: this.taskController.getRPCmeta().replyTo,
+      correlationId: this.taskController.getRPCmeta().correlationId,
     })
       .then((result) => {
         this.startTime = moment(result.created_at).utc()
@@ -145,7 +147,9 @@ export class TaskRunner {
         this.taskController.update({
           currentTransition: errorTask.current_transition,
           retriesRemaining: errorTask.retries_remaining,
-          retryDelay: errorTask.retry_delay
+          retryDelay: errorTask.retry_delay,
+          replyTo: errorTask.rpc_reply_to,
+          correlationId: errorTask.rpc_correlation_id
         })
         return this.retryError(errorTask)
       })
@@ -165,7 +169,9 @@ export class TaskRunner {
         this.taskController.update({
           currentTransition: suspendedTask.current_transition,
           retriesRemaining: suspendedTask.retries_remaining,
-          retryDelay: suspendedTask.retry_delay
+          retryDelay: suspendedTask.retry_delay,
+          replyTo: suspendedTask.rpc_reply_to,
+          correlationId: suspendedTask.rpc_correlation_id
         })
         return this.retrySuspended(suspendedTask)
       })

@@ -5,7 +5,7 @@
  * @license MIT {@link http://opensource.org/licenses/MIT}
  */
 
-import {has, each, isFunction, reduce, first,last,toPairs, omit} from "lodash/fp";
+import {has, each, isFunction, reduce, first,last,toPairs, omit, getOr} from "lodash/fp";
 import {TaskUpdate, TransitionUpdate, TaskSettings} from "./Store"
 import moment from "moment";
 
@@ -40,6 +40,8 @@ export const simpleDefaultTask = (taskSettings: TaskSettings) : any => {
     error: false,
     aborted: false,
     abort_error: null,
+    rpc_correlation_id: taskSettings.correlationId,
+    rpc_reply_to: taskSettings.replyTo,
     retry_attempts: 0,
     retry_delay: taskSettings.retryDelay || 0,
     requeue_count: 0,

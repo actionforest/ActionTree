@@ -65,7 +65,9 @@ export interface TransitionUpdate {
 export interface TaskSettings {
   name: string
   retriesRemaining?: number,
-  retryDelay?: number
+  retryDelay?: number,
+  replyTo: string,
+  correlationId: string
 }
 
 export interface Store {

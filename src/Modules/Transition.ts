@@ -124,7 +124,8 @@ export class Transition {
             warn: this.logCache.warn,
             info: this.logCache.info,
             error: this.logCache.error
-          }
+          },
+          getRPCmetadata: () => {return this.taskController.getRPCmeta()}
         }
         return Promise.resolve(this.handler(cloned, controller))
       })

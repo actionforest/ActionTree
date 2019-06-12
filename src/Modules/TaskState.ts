@@ -76,8 +76,6 @@ export class TaskState {
   }
 
   set(prop: TaskUpdateParams, val: string | number | boolean): string | number | boolean {
-
-    console.log(this.state)
     this.state[prop] = val
     return val
   }
