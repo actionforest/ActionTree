@@ -92,7 +92,6 @@ export class PGStore implements Store {
       .insert(t)
       .returning('*')
       .then((data) => {
-        console.log(data)
         return data[0]
       })
   }
