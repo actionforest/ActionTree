@@ -11,7 +11,7 @@ import {TaskRunnerParams, TaskRunner} from "./TaskRunner";
 import {PendingTask, TaskController, TaskTypes} from './TaskController'
 import {Task, TaskHandler, TransitionFunction, TransitionHandler} from "./TaskHandler";
 import {InternalLogger} from './InternalLogger'
-import {getOr, isFunction, reduce} from 'lodash/fp'
+import {getOr, isFunction, reduce, get} from 'lodash/fp'
 import {HandlerContainer} from "./HandlerContainer";
 
 // @ts-ignore
@@ -76,8 +76,8 @@ export class ActionTree {
   constructor(Store: Store, Settings: ActionTreeSettings){
     this.Store = Store
     this.Settings = {
-      infoLogging: getOr(true, 'infoLogging', Settings),
-      debugLogging: getOr(false, 'debugLogging', Settings),
+      infoLogging: !!get('infoLogging', Settings),
+      debugLogging: !!get('debugLogging', Settings),
       logger: getOr(console, 'logger', Settings)
     }
 
