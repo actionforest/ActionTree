@@ -9,3 +9,4 @@ export {ActionTree, TaskHook, ActionTreeSettings, ActionTreeLogger} from './Modu
 export {Task, TaskHandler} from './Modules/TaskHandler'
 export {PendingTask, TaskController} from './Modules/TaskController'
 export {Store, PGStore,MemoryStore, FileStore} from "./Modules/store";
+export {PgMigrationTemplate} from "./Modules/Migrations"

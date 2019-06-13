@@ -44,8 +44,17 @@ export class PGStore implements Store {
   id: number
   uuid: string
   private client: Knex
+  private task_table: string
+  private state_table: string
+  private transition_table: string
+  private log_table: string
 
-  constructor(clientOrConfig: SimplePGConfig | KnexConfig | Client) {
+  constructor(clientOrConfig: SimplePGConfig | KnexConfig | Client, public tablePrefix = 'actiontree') {
+
+    this.task_table = `${this.tablePrefix}_task`
+    this.state_table = `${this.tablePrefix}_state`
+    this.transition_table = `${this.tablePrefix}_transition`
+    this.log_table = `${this.tablePrefix}_log`
 
     if(isSimplePGConfig(clientOrConfig)){
       this.client = Knex({
@@ -62,33 +71,34 @@ export class PGStore implements Store {
         },
         debug: !!clientOrConfig.debug
       })
-      return
+      return this
     }
 
     if(isKnexConfig(clientOrConfig)){
       this.client = Knex(clientOrConfig)
-      return
+      return this
     }
 
     if(isClient(clientOrConfig)){
       this.client = clientOrConfig
-      return
+      return this
     }
 
   }
 
   createTask(taskSettings: TaskSettings) {
     let t = simpleDefaultTask(taskSettings)
-    return this.client('subexigent_task')
+    return this.client(this.task_table)
       .insert(t)
       .returning('*')
       .then((data) => {
+        console.log(data)
         return data[0]
       })
   }
 
   getTask(taskUuid: string, allData?: boolean) {
-    return this.client('subexigent_task')
+    return this.client(this.task_table)
       .where({uuid: taskUuid})
       .then((data) => {
         return data[0]
@@ -99,7 +109,7 @@ export class PGStore implements Store {
     return this.getTask(taskUuid, true)
       .then((data) => {
         update = reduceObjProps<TaskUpdate>(data, updateData)
-        return this.client('subexigent_task')
+        return this.client(this.task_table)
           .where({uuid: taskUuid})
           .returning('*')
           .update(update)
@@ -112,7 +122,7 @@ export class PGStore implements Store {
   createTransition(taskUuid: string, transitionName: string, stateUuid: string, transitionNumber: number) {
     let tr = simpleDefaultTransition(transitionName, stateUuid, transitionNumber)
     tr.task_uuid = taskUuid
-    return this.client('subexigent_transition')
+    return this.client(this.transition_table)
       .insert(tr)
       .returning('*')
       .then((data) => {
@@ -121,7 +131,7 @@ export class PGStore implements Store {
   }
 
   getTransition(taskUuid: string, transitionUuid: string) {
-    return this.client('subexigent_transition')
+    return this.client(this.transition_table)
       .where({uuid: transitionUuid})
       .then((data) => {
         return data[0]
@@ -134,7 +144,7 @@ export class PGStore implements Store {
     return this.getTransition(taskUuid, transitionUuid)
       .then((data) => {
         update = reduceObjProps<TaskUpdate>(data, updateData)
-        return this.client('subexigent_transition')
+        return this.client(this.transition_table)
           .where({uuid: transitionUuid})
           .returning('*')
           .update(update)
@@ -146,7 +156,7 @@ export class PGStore implements Store {
 
   findTransition(taskUuid: string, ordinal: number){
 
-    return this.client('subexigent_transition')
+    return this.client(this.transition_table)
       .where({task_uuid: taskUuid, ordinal: ordinal})
       .then((data) => {
 
@@ -156,7 +166,7 @@ export class PGStore implements Store {
 
   createState(taskUuid: string, state: any) {
 
-    return this.client('subexigent_state')
+    return this.client(this.state_table)
       .insert({task_uuid: taskUuid, state: state})
       .returning('*')
       .then((data) => {
@@ -165,7 +175,7 @@ export class PGStore implements Store {
   }
 
   getState(taskUuid: string, stateUuid: string) {
-    return this.client('subexigent_state')
+    return this.client(this.state_table)
       .where({uuid: stateUuid})
       .then((data) => {
         return data[0]
@@ -183,7 +193,7 @@ export class PGStore implements Store {
       return acc
     }, [], messages)
 
-    return this.client('subexigent_log')
+    return this.client(this.log_table)
       .insert(toInsert)
       .returning('*')
       .then((data) => {

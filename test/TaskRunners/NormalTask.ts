@@ -4,17 +4,18 @@
  * @project exigency
  * @license MIT {@link http://opensource.org/licenses/MIT}
  */
-import {ActionTree, MemoryStore, Task} from "../../src";
+import {ActionTree, MemoryStore, Task,PGStore} from "../../src";
 import {BasicTask} from "../../test_mocks/tasks";
+import {PgStoreFromEnv} from "../../test_mocks/helpers";
 
 describe('Normal Task', () => {
   // let localstore = new FileStore(`${process.cwd()}/fileStore`)
-  let localstore: MemoryStore = new MemoryStore()
+  // let localstore: MemoryStore = new MemoryStore()
 
-  // let localstore: PGStore = PgStoreFromEnv()
-  // afterAll(() => {
-  //     localstore.closeStore()
-  // });
+  let localstore: PGStore = PgStoreFromEnv()
+  afterAll(() => {
+      localstore.closeStore()
+  });
 
   let  actionTree: ActionTree = new ActionTree(localstore, {debugLogging: false, infoLogging: false})
   let basicTask: Task = BasicTask
