@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "prepublishOnly": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:sql": "source testEnvs.sh && jest"
   },
   "repository": {
     "type": "git",

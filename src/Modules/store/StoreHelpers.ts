@@ -40,6 +40,7 @@ export const simpleDefaultTask = (taskSettings: TaskSettings) : any => {
     error: false,
     aborted: false,
     abort_error: null,
+    caller_metadata: taskSettings.callerMetadata,
     rpc_correlation_id: taskSettings.correlationId,
     rpc_reply_to: taskSettings.replyTo,
     retry_attempts: 0,
@@ -94,15 +95,15 @@ export const defaultTransition = (transitionName: string, uuid: string, starting
 
 export const pruneTaskRetVal = (rawTask: any) => {
   return omit(['states', 'transitions'], rawTask)
-  return {
-    name: rawTask.name,
-    uuid: rawTask.uuid,
-    complete: rawTask.complete,
-    suspended: rawTask.suspended,
-    error: rawTask.error,
-    aborted: rawTask.aborted,
-    abortError: rawTask.abort_error,
-    retryAttempts: rawTask.retry_attempts,
-    currentTransition: rawTask.current_transition,
-  }
+  // return {
+  //   name: rawTask.name,
+  //   uuid: rawTask.uuid,
+  //   complete: rawTask.complete,
+  //   suspended: rawTask.suspended,
+  //   error: rawTask.error,
+  //   aborted: rawTask.aborted,
+  //   abortError: rawTask.abort_error,
+  //   retryAttempts: rawTask.retry_attempts,
+  //   currentTransition: rawTask.current_transition,
+  // }
 }

@@ -164,7 +164,6 @@ export class PGStore implements Store {
   }
 
   createState(taskUuid: string, state: any) {
-
     return this.client(this.state_table)
       .insert({task_uuid: taskUuid, state: state})
       .returning('*')

@@ -43,7 +43,7 @@ export class TaskHandler {
     this.config = {
       name: task.config.name,
       initial: task.config.initial,
-      retryOnError: getOr(true, 'config.retryOnError', task ),
+      retryOnError: getOr(false, 'config.retryOnError', task ),
       retryDelay: getOr(1000, 'config.retry_delay', task ),
       delayMultiplier: getOr(1.5, 'config.delayMultiplier', task ),
       retryLimit: getOr(1, 'config.retryLimit', task ),

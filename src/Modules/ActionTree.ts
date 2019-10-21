@@ -130,12 +130,11 @@ export class ActionTree {
 
     return new TaskRunner(runData).run()
       .then((result) => {
-
         stats = result[0]
         let hook = this.taskHooks[stats.result]
 
-        if(isFunction(this.taskHooks[stats.result])){
-          return this.taskHooks[stats.result](result[0], result[1])
+        if(isFunction(hook)){
+          return hook(result[0], result[1])
             .then(() => {
               return {ranHook: stats.result, error: null}
             })

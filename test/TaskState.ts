@@ -62,8 +62,6 @@ describe('Storage Interfaces', () => {
   map((store: Store) => {
     test(`${store.constructor.name}`, async () => {
 
-
-
       let createTask = await store.createTask({name: 'MyTask', retriesRemaining: 5})
       let taskState = new TaskState(createTask)
 

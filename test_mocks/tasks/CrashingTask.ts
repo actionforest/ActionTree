@@ -12,6 +12,7 @@ export const CrashingTask = (retries = 1): Task => {
     config: {
       name: 'crashingTask',
       initial: 'doWork',
+      retryOnError: true,
       retryLimit: retries,
       retryDelay: 1000
     },

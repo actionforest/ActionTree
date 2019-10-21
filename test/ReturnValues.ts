@@ -38,6 +38,8 @@ describe('Success Retry and Error return values.', () => {
       error: false,
       type: 'Fresh',
       result: 'requeue',
+      state: {},
+      callerMetadata: {},
       retryDelay: 1000
     }
 
