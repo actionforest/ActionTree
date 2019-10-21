@@ -1,6 +1,6 @@
 {
   "name": "actiontrees",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "A journaling, state based task runner.",
   "main": "index.js",
   "files": [
