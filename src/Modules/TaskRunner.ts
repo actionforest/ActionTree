@@ -69,6 +69,7 @@ export class TaskRunner {
       uuid: this.taskController.getUuid(),
       transitions: this.taskController.getCurrentTransition(),
       error: error,
+      transitionError: this.taskController.getTransitionError(),
       type: this.taskController.getType(),
       result: ResultType,
       state: this.taskController.getState().state,

@@ -160,6 +160,10 @@ export class TaskController {
     return this.error
   }
 
+  getTransitionError(){
+    return this.transitionError
+  }
+
   getCallerMetadata(){
     return this.callerMetadata
   }
