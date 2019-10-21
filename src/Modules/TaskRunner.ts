@@ -69,8 +69,11 @@ export class TaskRunner {
       uuid: this.taskController.getUuid(),
       transitions: this.taskController.getCurrentTransition(),
       error: error,
+      transitionError: this.taskController.getTransitionError(),
       type: this.taskController.getType(),
       result: ResultType,
+      state: this.taskController.getState().state,
+      callerMetadata: this.taskController.getCallerMetadata(),
       retryDelay: this.taskController.getRetryDelay(),
       startTime: this.startTime.toISOString(),
       endTime: now.toISOString() || null,
@@ -100,6 +103,7 @@ export class TaskRunner {
       name: this.taskController.getName(),
       retriesRemaining: this.taskHandler.getConfig().retryLimit,
       retryDelay: this.taskHandler.getConfig().retryDelay,
+      callerMetadata: this.taskController.getCallerMetadata(),
       replyTo: this.taskController.getRPCmeta().replyTo,
       correlationId: this.taskController.getRPCmeta().correlationId,
     })
@@ -148,6 +152,7 @@ export class TaskRunner {
           currentTransition: errorTask.current_transition,
           retriesRemaining: errorTask.retries_remaining,
           retryDelay: errorTask.retry_delay,
+          callerMetadata: errorTask.caller_metadata,
           replyTo: errorTask.rpc_reply_to,
           correlationId: errorTask.rpc_correlation_id
         })
@@ -170,6 +175,7 @@ export class TaskRunner {
           currentTransition: suspendedTask.current_transition,
           retriesRemaining: suspendedTask.retries_remaining,
           retryDelay: suspendedTask.retry_delay,
+          callerMetadata: suspendedTask.caller_metadata,
           replyTo: suspendedTask.rpc_reply_to,
           correlationId: suspendedTask.rpc_correlation_id
         })

@@ -21,6 +21,10 @@ export interface RPCmetadata {
   replyTo: string
 }
 
+export interface callerMetadata {
+  [key: string] : any
+}
+
 export interface TaskState {
   [key: string]: any
 }
@@ -54,6 +58,7 @@ export interface TaskControllerProps {
   currentTransition?: any,
   transitionName?: string
   transitionError?: Error
+  callerMetadata?: callerMetadata
   replyTo?: string
   correlationId?: string
   type?: TaskTypes,
@@ -73,13 +78,15 @@ export class TaskController {
   private transitionName: string
   private transitionError: Error
   private readonly type: TaskTypes
-  private readonly identifier: any
+  // private readonly identifier: any
+  private callerMetadata: callerMetadata
   private correlationId: string | any
   private replyTo: string | any
 
 
-  constructor(taskData: PendingTask, queueIdentifier?: any) {
-    this.identifier = queueIdentifier || null
+  constructor(taskData: PendingTask, callerMetadata?: callerMetadata) {
+    // this.identifier = callerMetadata || null
+    this.callerMetadata = callerMetadata || {}
     this.correlationId = getOr(null, 'RPCmetadata.correlationId', taskData)
     this.replyTo = getOr(null, 'RPCmetadata.replyTo', taskData)
     this.name = taskData.metadata.name
@@ -100,7 +107,7 @@ export class TaskController {
   }
 
   getIdentifier(){
-    return this.identifier
+    return this.callerMetadata
   }
 
   getTransitionName(): string {
@@ -151,6 +158,14 @@ export class TaskController {
 
   getError() {
     return this.error
+  }
+
+  getTransitionError(){
+    return this.transitionError
+  }
+
+  getCallerMetadata(){
+    return this.callerMetadata
   }
 
   getRPCmeta(){

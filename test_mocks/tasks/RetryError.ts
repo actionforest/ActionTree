@@ -12,6 +12,7 @@ export const RetryError = (retry: number = 1) : Task =>{
     config: {
       name: 'retryError',
       initial: 'doWork',
+      retryOnError: true,
       retryLimit: retry
     },
      transitions: {

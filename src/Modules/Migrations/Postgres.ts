@@ -40,6 +40,7 @@ export const PgMigrationTemplate = (tablePrefix) => {
           t.boolean('error')
           t.boolean('aborted')
           t.text('abort_error')
+          t.jsonb('caller_metadata')
           t.text('rpc_correlation_id')
           t.text('rpc_reply_to')
           t.integer('retry_attempts').unsigned().notNull()
